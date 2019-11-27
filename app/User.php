@@ -15,6 +15,6 @@ class User extends Authenticatable
 
     public function groups()
     {
-        return $this->belongsToMany(Group::class)->orderBy('created_at', 'desc');
+        return $this->belongsToMany(Group::class, 'users_groups', 'user_id', 'group_id');
     }
 }
