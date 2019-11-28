@@ -53,7 +53,7 @@
                 <div class="pt-3">Groups:</div>
                 @foreach ($groups as $group)
                     <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="groups[]" id="{{$group->name}}" value="{{$group->name}}">
+                        <input class="form-check-input" type="checkbox" name="groups[]" id="{{$group->name}}" value="{{$group->id}}">
                         <label class="form-check-label" for="{{$group->name}}">{{$group->name}}</label>
                     </div>
                 @endforeach

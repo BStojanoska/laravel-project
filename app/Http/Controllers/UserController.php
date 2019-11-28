@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Note;
 use App\User;
 use App\Group;
 use Illuminate\Http\File;
@@ -39,7 +40,12 @@ class UserController extends Controller
 
         $user->save();
 
-        $user->avatar = $request->avatar;
+        $note = new Note();
+        $note->note = $request->note;
+        $note->user_id = $user->id;
+        $note->save();
+
+        $user->groups()->sync($request->groups);
     }
 
     public function edit() {
