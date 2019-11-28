@@ -27,7 +27,7 @@
                     @foreach ($users as $i => $user)
                         <tr>
                             <th scope="row">{{$i + 1}}</th>
-                            <td><img src="{{asset('storage/avatars/'.$user->avatar)}}" ></td>
+                            <td><img src="{{asset('/storage/avatars/'.$user->avatar)}}" ></td>
                             <td>{{$user->firstname}}</td>
                             <td>{{$user->lastname}}</td>
                             <td>{{$user->address}}</td>

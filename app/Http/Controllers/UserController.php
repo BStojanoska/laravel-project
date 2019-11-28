@@ -27,8 +27,9 @@ class UserController extends Controller
         $user = new User();
 
         $avatar = 'avatar-' . time() . '.' . $request->file('avatar')->getClientOriginalExtension();
+        Storage::putFileAs('/public/avatars', new File($request->file('avatar')), $avatar);
 
-        $user->avatar = Storage::putFileAs('/public/storage/avatars', $request->file('avatar'), $avatar);
+        $user->avatar = $avatar;
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
         $user->address = $request->address;
@@ -46,6 +47,8 @@ class UserController extends Controller
         $note->save();
 
         $user->groups()->sync($request->groups);
+
+        return redirect()->route('users');
     }
 
     public function edit() {
