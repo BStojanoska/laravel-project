@@ -17,7 +17,7 @@ use Illuminate\Support\Str;
 |
 */
 
-$filepath = storage_path('app/public/animals');
+$filepath = storage_path('app/public/avatars');
 if (!File::exists($filepath)) {
     File::makeDirectory($filepath);
 }
