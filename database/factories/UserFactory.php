@@ -24,7 +24,7 @@ if (!File::exists($filepath)) {
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-        'avatar' => $faker->image('public/storage/avatars',50,50, null, false),
+        'avatar' => $faker->image('public/storage/avatars',50,50, null, true),
         'firstname' => $faker->firstName,
         'lastname' => $faker->lastName,
         'address' => $faker->streetAddress,

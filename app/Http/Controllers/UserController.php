@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Group;
+use Illuminate\Http\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -23,7 +25,9 @@ class UserController extends Controller
     public function add(Request $request) {
         $user = new User();
 
-        $user->avatar = Storage::putFile('avatars', new File($request->file('avatar')));
+        $avatar = 'avatar-' . time() . '.' . $request->file('avatar')->getClientOriginalExtension();
+
+        $user->avatar = Storage::putFileAs('/public/storage/avatars', $request->file('avatar'), $avatar);
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
         $user->address = $request->address;
