@@ -1,3 +1,5 @@
+use Illuminate\Support\Facades\Crypt;
+
 @extends('layout.layout')
 @section('content')
     <div class="container-fluid">
@@ -44,7 +46,7 @@
                             <td>{{Str::limit($user->note->note, 100)}}</td>
                             <td>
                                 <a href="" >Edit</a>
-                                <a href="" >Delete</a>
+                                <a href="{{route('deleteUser', Crypt::encrypt($user->id))}}" >Delete</a>
                             </td>
                         </tr>
                     @endforeach

@@ -7,6 +7,7 @@ use App\User;
 use App\Group;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -55,7 +56,10 @@ class UserController extends Controller
 
     }
 
-    public function delete() {
+    public function delete(Request $request, $id) {
+        $decrypted = Crypt::decrypt($id);
+        $user = User::findOrFail($decrypted)->delete();
 
+        return redirect()->route('users');
     }
 }
