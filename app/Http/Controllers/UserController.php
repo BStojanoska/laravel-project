@@ -25,7 +25,7 @@ class UserController extends Controller
 
     public function add(Request $request) {
         $user = new User();
-        if ($request->id) {
+        if ($request->id && is_numeric($request->id)) {
             $coll = User::where('id', $request->id)->get();
             $user = $coll[0];
         }
@@ -48,7 +48,7 @@ class UserController extends Controller
         $user->save();
 
         $note = new Note();
-        if ($request->id) {
+        if ($request->id && is_numeric($request->id)) {
             $note = $user->note;
         }
         $note->note = $request->note;

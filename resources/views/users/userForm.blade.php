@@ -5,7 +5,7 @@
             <a href="{{route('users')}}"> <h5><- Back</h5> </a>
         </div>
         <div class="row">
-            <h2 class="text-center col-12">{{($user)?'Edit':'Add new'}} user</h2>
+            <h2 class="text-center col-12">{{isset($user)?'Edit':'Add new'}} user</h2>
             <form class="col-6 mx-auto py-3" method="POST" action="{{route('addUser')}}" enctype="multipart/form-data">
                 <input type="hidden" name="id" value={{$user->id ?? ''}} />
 

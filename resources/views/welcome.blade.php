@@ -6,7 +6,7 @@
             <h1><a href="{{route('users')}}">Go to Users</a></h1>
             </div>
             <div class="col-6">
-                <h1><a href="">Go to Groups</a></h1>
+                <h1><a href="{{route('groups')}}">Go to Groups</a></h1>
             </div>
         </div>
     </div>
