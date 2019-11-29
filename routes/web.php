@@ -16,5 +16,6 @@ Route::view('/', 'welcome');
 Route::get('/users/show', 'UserController@index')->name('users');
 Route::get('/users/add', 'UserController@form')->name('addUserForm');
 Route::get('/users/delete/{id}', 'UserController@delete')->name('deleteUser');
+Route::get('/users/edit/{id}', 'UserController@edit')->name('editUser');
 
 Route::post('/users/addUser', 'UserController@add')->name('addUser');

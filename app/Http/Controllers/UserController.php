@@ -6,6 +6,7 @@ use App\Note;
 use App\User;
 use App\Group;
 use Illuminate\Http\File;
+use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
@@ -19,18 +20,22 @@ class UserController extends Controller
     }
 
     public function form() {
-        $groups = Group::all();
-
-        return view('users.userForm', ['groups' => $groups]);
+        return view('users.userForm');
     }
 
     public function add(Request $request) {
         $user = new User();
+        if ($request->id) {
+            $coll = User::where('id', $request->id)->get();
+            $user = $coll[0];
+        }
 
-        $avatar = 'avatar-' . time() . '.' . $request->file('avatar')->getClientOriginalExtension();
-        Storage::putFileAs('/public/avatars', new File($request->file('avatar')), $avatar);
-
-        $user->avatar = $avatar;
+        if ($request->file('avatar')) {
+            $avatar = 'avatar-' . time() . '.' . $request->file('avatar')->getClientOriginalExtension();
+            Storage::putFileAs('/public/avatars', new File($request->file('avatar')), $avatar);
+            $user->avatar = $avatar;
+        }
+        
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
         $user->address = $request->address;
@@ -43,6 +48,9 @@ class UserController extends Controller
         $user->save();
 
         $note = new Note();
+        if ($request->id) {
+            $note = $user->note;
+        }
         $note->note = $request->note;
         $note->user_id = $user->id;
         $note->save();
@@ -52,8 +60,21 @@ class UserController extends Controller
         return redirect()->route('users');
     }
 
-    public function edit() {
+    public function edit(Request $request, $id) {
+        $decrypted = Crypt::decrypt($id);
+        $user = User::where('id', $decrypted)->get();
 
+        $groupIds = [];
+        foreach ($user[0]->groups as $group) {
+            $groupIds[] = $group->id;
+        }
+
+        $flattened = Arr::flatten($groupIds);
+
+        return view('users.userForm', [
+            'user' => $user[0],
+            'groupIds' => $flattened
+        ]);
     }
 
     public function delete(Request $request, $id) {
